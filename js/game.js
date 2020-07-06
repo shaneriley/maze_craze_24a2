@@ -115,8 +115,9 @@ class Maze {
 class MazeCraze {
   constructor() {
     this.defaultDotColor = 'rgba(0, 0, 0, 0)';
-    this.endColor = '#b00b00';
     this.visitedDotColor = '#a0a0a0';
+    this.playerColor = '#0000ff';
+    this.goalColor = '#b00b00';
     this.width = 24;
     this.height = 24;
     this.maze = [];
@@ -162,7 +163,6 @@ class MazeCraze {
     const player = {
       x: 0,
       y: 0,
-      color: 'blue',
       movements: {
         [Direction.Up]() {
           if (!player.y) { return; }
@@ -197,7 +197,6 @@ class MazeCraze {
     this.startTime = new Date();
     this.visited_cells.clearCells();
     this.visited_cells.visit(this.player.x, this.player.y);
-    game.setText('Move: arrow keys');
   }
 
   update(game) {
@@ -206,8 +205,8 @@ class MazeCraze {
         game.setDot(x, y, this[`${cell ? 'visited' : 'default'}DotColor`]);
       });
     });
-    game.setDot(this.player.x, this.player.y, this.player.color);
-    game.setDot(this.width - 1, this.height - 1, this.endColor);
+    game.setDot(this.player.x, this.player.y, this.playerColor);
+    game.setDot(this.width - 1, this.height - 1, this.goalColor);
     if (this.player.x + 1 === this.width && this.player.y + 1 === this.height) {
       this.gameOver();
     }
@@ -230,8 +229,20 @@ class MazeCraze {
 let maze_craze;
 document.addEventListener('DOMContentLoaded', () => {
   maze_craze = new MazeCraze();
+
   document.querySelector('button').addEventListener('click', () => {
     gameOverLayer.hide();
     maze_craze = new MazeCraze();
   });
+
+  setTimeout(() => {
+    document.querySelectorAll('[type="color"]').forEach((input) => {
+      const color = getComputedStyle(document.body).getPropertyValue(`--${input.name}`).trim();
+      input.value = color;
+      input.addEventListener('input', () => {
+        document.body.style.setProperty(`--${input.name}`, input.value);
+        maze_craze[input.name] = input.value;
+      });
+    });
+  }, 400);
 });

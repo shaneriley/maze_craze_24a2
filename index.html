@@ -26,7 +26,18 @@
             <button>Play another</button>
           </div>
         </div>
+        <input type="checkbox" name="colors" id="colors" />
+        <aside class="colors">
+          <h4>Colors</h4>
+          <ul>
+            <li><label>Walls: <input type="color" name="highlightColor" pattern="#[0-9A-Fa-f]{6}" placeholder="#000000" /></label></li>
+            <li><label>Player: <input type="color" name="playerColor" pattern="#[0-9A-Fa-f]{6}" placeholder="#000000" /></label></li>
+            <li><label>Goal: <input type="color" name="goalColor" pattern="#[0-9A-Fa-f]{6}" placeholder="#000000" /></label></li>
+            <li><label>Visited space: <input type="color" name="visitedDotColor" pattern="#[0-9A-Fa-f]{6}" placeholder="#000000" /></label></li>
+          </ul>
+        </aside>
       </div>
+      <label for="colors">Toggle colors</label>
     </main>
   </body>
 </html>
